@@ -2,14 +2,13 @@ package com.example.sunnyweather.ui.place
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sunnyweather.MainActivity
 import com.example.sunnyweather.R
 import com.example.sunnyweather.databinding.FragmentPlaceBinding
 import com.example.sunnyweather.ui.weather.WeatherActivity
@@ -23,7 +22,7 @@ class PlaceFragment: Fragment(R.layout.fragment_place) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentPlaceBinding.bind(view)
 
-        if (viewModel.isPlaceSaved()) {
+        if (activity is MainActivity && viewModel.isPlaceSaved()) {
             val place = viewModel.getSavedPlace()
             val intent = Intent(context, WeatherActivity::class.java).apply {
                 putExtra("location_lng", place.location.lng)
@@ -64,14 +63,6 @@ class PlaceFragment: Fragment(R.layout.fragment_place) {
                 it.exceptionOrNull()?.printStackTrace()
             }
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_place, container, false)
     }
 
     override fun onDestroyView() {
